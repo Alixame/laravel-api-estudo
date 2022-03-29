@@ -5357,9 +5357,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['csrf_token']
+  props: ['csrf_token'],
+  data: function data() {
+    return {
+      email: '',
+      password: ''
+    };
+  },
+  methods: {
+    login: function login(e) {
+      var url = 'http://carros-test.com/api/login';
+      var config = {
+        method: 'post',
+        body: new URLSearchParams({
+          'email': this.email,
+          'password': this.password
+        })
+      };
+      fetch(url, config).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (data.token) {
+          document.cookie = 'token=' + data.token + ';SameSite=Lax';
+        }
+      });
+      e.target.submit();
+    }
+  }
 });
 
 /***/ }),
@@ -28099,20 +28124,112 @@ var render = function () {
           _c("div", { staticClass: "card-header" }, [_vm._v("Login")]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _c("form", { attrs: { method: "POST", action: "" } }, [
-              _c("input", {
-                attrs: { type: "hidden", name: "_token" },
-                domProps: { value: _vm.csrf_token },
-              }),
-              _vm._v(" "),
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._m(1),
-              _vm._v(" "),
-              _vm._m(2),
-              _vm._v(" "),
-              _vm._m(3),
-            ]),
+            _c(
+              "form",
+              {
+                attrs: { method: "POST", action: "" },
+                on: {
+                  submit: function ($event) {
+                    $event.preventDefault()
+                    return _vm.login($event)
+                  },
+                },
+              },
+              [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf_token },
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mb-3" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-md-4 col-form-label text-md-end",
+                      attrs: { for: "email" },
+                    },
+                    [_vm._v("Email")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.email,
+                          expression: "email",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "email",
+                        type: "email",
+                        name: "email",
+                        value: "",
+                        required: "",
+                        autocomplete: "email",
+                        autofocus: "",
+                      },
+                      domProps: { value: _vm.email },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.email = $event.target.value
+                        },
+                      },
+                    }),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mb-3" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "col-md-4 col-form-label text-md-end",
+                      attrs: { for: "password" },
+                    },
+                    [_vm._v("Senha")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.password,
+                          expression: "password",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "password",
+                        type: "password",
+                        name: "password",
+                        required: "",
+                        autocomplete: "current-password",
+                      },
+                      domProps: { value: _vm.password },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.password = $event.target.value
+                        },
+                      },
+                    }),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._m(1),
+              ]
+            ),
           ]),
         ]),
       ]),
@@ -28120,64 +28237,6 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mb-3" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-4 col-form-label text-md-end",
-          attrs: { for: "email" },
-        },
-        [_vm._v("Email")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            id: "email",
-            type: "email",
-            name: "email",
-            value: "",
-            required: "",
-            autocomplete: "email",
-            autofocus: "",
-          },
-        }),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mb-3" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-4 col-form-label text-md-end",
-          attrs: { for: "password" },
-        },
-        [_vm._v("Senha")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            id: "password",
-            type: "password",
-            name: "password",
-            required: "",
-            autocomplete: "current-password",
-          },
-        }),
-      ]),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
