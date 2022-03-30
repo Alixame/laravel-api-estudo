@@ -30,12 +30,33 @@
                     </template>
 
                     <template v-slot:rodape>
-                        <button type="buttom" class="btn btn-success btn-sm float-end">Adicionar</button>
+                        <button type="buttom" class="btn btn-success btn-sm float-end" data-bs-toggle="modal" data-bs-target="#modalMarca">Adicionar</button>
                     </template>
                 </card-component>
 
             </div>
         </div>
+
+       <modal-component id="modalMarca" titulo="Adicionar Marca">
+           <template v-slot:conteudo>
+               <div class="mb-3">
+                    <input-component id="novoNome" titulo="Nome Marca" id-help="novoNomeHelp" texto-help="Nome da marca">
+                        <input type="text" class="form-control" id="novoNome" aria-describedby="novoNomeHelp">
+                    </input-component>
+                </div>
+                <div class="mb-3">
+                    <input-component id="novaImagem" titulo="Imagem" id-help="novaImagemHelp" texto-help="Imagem da marca">
+                        <input type="file" class="form-control-file" id="novaImagem" aria-describedby="novaImagemHelp">
+                    </input-component>
+                </div>
+           </template>
+
+           <template v-slot:rodape>
+               <button type="button" class="btn btn-primary">Salvar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </template>
+        </modal-component>
+
     </div>
 </template>
 
