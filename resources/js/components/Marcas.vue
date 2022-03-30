@@ -1,0 +1,46 @@
+<template>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+
+                <card-component titulo="Pesquisa de Marcas">
+                    <template v-slot:conteudo>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <input-component id="inputId" titulo="ID Marca" id-help="idHelp" texto-help="Opcional. Numero identificador da marca">
+                                    <input type="number" class="form-control" id="inputId" aria-describedby="idHelp">
+                                </input-component>
+                            </div>
+                            <div class="col mb-3">
+                                <input-component id="inputNome" titulo="Nome da Marca" id-help="nomeHelp" texto-help="Opcional. Nome da marca">
+                                    <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp">
+                                </input-component>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template v-slot:rodape>
+                        <button type="submit" class="btn btn-primary btn-sm float-end">Pesquisar</button>
+                    </template>
+                </card-component>
+
+                <card-component titulo="Listagen de Marcas">
+                    <template v-slot:conteudo>
+                        <tabela-component></tabela-component>
+                    </template>
+
+                    <template v-slot:rodape>
+                        <button type="buttom" class="btn btn-success btn-sm float-end">Adicionar</button>
+                    </template>
+                </card-component>
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+
+    }
+</script>
