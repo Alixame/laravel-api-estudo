@@ -38,6 +38,10 @@
         </div>
 
        <modal-component id="modalMarca" titulo="Adicionar Marca">
+           <template v-slot:alertas>
+               <alert-component tipo="success" :feedback="feedback" titulo="Marca cadastrada com sucesso!" v-if="resposta == 'sucesso'"></alert-component>
+               <alert-component tipo="danger" :feedback="feedback" titulo="Erro ao cadastrada marca!" v-if="resposta == 'erro'"></alert-component>
+           </template>
            <template v-slot:conteudo>
                <div class="mb-3">
                     <input-component id="novoNome" titulo="Nome Marca" id-help="novoNomeHelp" texto-help="Nome da marca">
@@ -66,7 +70,9 @@
             return {
                 urlBase: 'http://carros-test.com/api/v1/marca',
                 novoNome: '',
-                arquivoImagem: []
+                arquivoImagem: [],
+                resposta: '',
+                feedback: {}
             }
         },
         methods: {
@@ -88,9 +94,18 @@
 
                 axios.post(this.urlBase, formData, config)
                     .then(response => {
-                        console.log(response)
+                        this.resposta = 'sucesso'
+                        this.feedback = {
+                            mensagem: "ID do Registro: " + response.data.id,
+                        }
                     })
-                    .catch(errors)
+                    .catch(errors => {
+                        this.resposta = 'erro'
+                        this.feedback = {
+                            mensagem: errors.response.data.message,
+                            dados: errors.response.data.errors
+                        }
+                    })
             }
         }
     }
