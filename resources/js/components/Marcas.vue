@@ -26,7 +26,7 @@
 
                 <card-component titulo="Listagen de Marcas">
                     <template v-slot:conteudo>
-                        <tabela-component></tabela-component>
+                        <tabela-component :dados="marcas" :titulos="titulos"></tabela-component>
                     </template>
 
                     <template v-slot:rodape>
@@ -72,10 +72,25 @@
                 novoNome: '',
                 arquivoImagem: [],
                 resposta: '',
-                feedback: {}
+                feedback: {},
+                titulos: {
+                    id: {titulo: "#", tipo: "texto"},
+                    nome: {titulo: "Nome", tipo: "texto"},
+                    imagem: {titulo: "Imagem", tipo: "imagem"},
+                    created_at: {titulo: "Data de Criação", tipo: "texto"},
+                },
+                marcas: []
             }
         },
         methods: {
+            carregarMarcas() {
+                axios.get(this.urlBase)
+                    .then(response => {
+                        this.marcas = response.data
+                    })
+                    .catch(errors => {
+                    })
+            },
             carregarImagem(e) {
                 this.arquivoImagem = e.target.files
             },
@@ -106,7 +121,10 @@
                             dados: errors.response.data.errors
                         }
                     })
-            }
+            },
+        },
+        mounted() {
+                this.carregarMarcas()
         }
     }
 </script>
