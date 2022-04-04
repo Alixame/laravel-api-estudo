@@ -33,7 +33,7 @@ class MarcaController extends Controller
 
             // se sim -> define a relação e os atributos que serão trazidos
             $atributos_modelos = 'modelos:id,marca_id,'.$request->atributos_modelos;
-            
+
             $marcaRepository->atributosRegistrosRelacionados($atributos_modelos);
 
         } else {
@@ -43,7 +43,7 @@ class MarcaController extends Controller
 
         // Verificando se existe filtro na requisição
         if ($request->has('filtros')) {
-            
+
             $marcaRepository->filtro($request->filtros);
 
         }
@@ -56,7 +56,7 @@ class MarcaController extends Controller
 
         }
 
-        return response()->json($marcaRepository->getResult(), 200);
+        return response()->json($marcaRepository->getResultPaginate(3), 200);
     }
 
     /**
@@ -71,7 +71,7 @@ class MarcaController extends Controller
 
         // validando campos passados
         $request->validate($this->marca->rules(), $this->marca->feedbacks());
-        
+
         // pegando dados do arquivo
         $imagem = $request->file('imagem');
 
@@ -80,7 +80,7 @@ class MarcaController extends Controller
 
         // salvando dados no banco
         $marca = $this->marca->create(['nome' => $request->get('nome'), 'imagem' => $img_urn]);
-        
+
         // retorna a responsa em json
         return response()->json($marca, 201);
     }
@@ -100,7 +100,7 @@ class MarcaController extends Controller
         if($marca === null) {
             // retorna erro em json
             return response()->json(['erro' => 'Registro não existe'], 404);
-        } 
+        }
 
         // retorna a responsa em json
         return response()->json($marca, 200);
@@ -122,17 +122,17 @@ class MarcaController extends Controller
         if($marca === null) {
             // retorna erro em json
             return response()->json(['erro' => 'Registro não existe'], 404);
-        } 
+        }
 
         // verificando se o metodo enviado é do tipo correto para efetuar a alteração e carregando dinamicamente as regras de validação de dados
         if ($request->method() === 'PATCH') {
-            
+
             // definindo array
             $regrasDinamicas = [];
 
             // percorrendo as regras definidas no model marca
             foreach ($marca->rules() as $input => $regra) {
-                
+
                 // verificando se o valor informado possui regra
                 if (array_key_exists($input, $request->all())) {
                     $regrasDinamicas[$input] = $regra;
@@ -145,7 +145,7 @@ class MarcaController extends Controller
 
         } else {
 
-            // validando dados 
+            // validando dados
             $request->validate($marca->rules(), $marca->feedbacks());
 
         }
@@ -189,8 +189,8 @@ class MarcaController extends Controller
         if($marca === null) {
             // retorna erro em json
             return response()->json(['erro' => 'Registro não existe'], 404);
-        } 
-        
+        }
+
         // excluindo registro
         $marca->delete();
 
@@ -199,6 +199,6 @@ class MarcaController extends Controller
 
         // retorna a responsa em json
         return response()->json(['mensagem' => 'O marca foi removido com sucesso!'], 200);
-        
+
     }
 }

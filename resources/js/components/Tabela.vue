@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th v-for="elemento, key in titulos" :key="key">{{elemento.titulo}}</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -12,6 +13,11 @@
                     <span v-if="titulos[chaveValor].tipo == 'imagem'">
                         <img :src="'/storage/' + valor" width="100">
                     </span>
+                </td>
+                <td>
+                    <button class="btn btn-outline-primary btn-sm" v-if="visualizar.visivel" :data-bs-toggle="visualizar.dataToggle" :data-bs-target="visualizar.dataTarget">Visualizar</button>
+                    <button class="btn btn-outline-info btn-sm" v-if="atualizar">Atualizar</button>
+                    <button class="btn btn-outline-danger btn-sm" v-if="remover">Remover</button>
                 </td>
             </tr>
 
@@ -32,7 +38,7 @@
 
 <script>
 export default {
-        props: ['dados', 'titulos'],
+        props: ['dados', 'titulos', 'visualizar', 'atualizar', 'remover'],
         computed: {
             dadosFiltrados() {
                 // criado variavel que ira armazenas os campos (atributos desejados do registro)
